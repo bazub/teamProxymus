@@ -9,6 +9,10 @@ VARIABLES USED
 time= timestamp
 IP= originating IP
 action= TCP_X thingy
+meth= Method (get/connect/etc)
+link= Link (i.e. http://google.com)
+flink= Full link (when meth==GET, i.e. http://google.com/blablabla/something)
+
 
 '''
 filer="/home/ubuntu/access.log"
@@ -72,4 +76,32 @@ while 1:
             break
         i=i+1      
     i=i+1
+    #Select Link
+    if(meth=="GET"):
+        aux=i
+        v=0
+        while 1:
+            if line[i]=='/':
+                v=v+1
+            elif line[i]==' ':
+                flink=line[aux:i]
+                break
+            if v==3:
+                link=line[aux:i]
+                v=v+1
+            i=i+1
+    elif meth=="CONNECT":
+        aux=i
+        while 1:
+            if line[i]==' ':
+                link=line[aux:i]
+                break
+            i=i+1
+    #Add more methods?
+    
+    #Ignore next_field
+                
+        
+        
+        
         
