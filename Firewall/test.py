@@ -12,20 +12,20 @@ action= TCP_X thingy
 meth= Method (get/connect/etc)
 link= Link (i.e. http://google.com)
 flink= Full link (when meth==GET, i.e. http://google.com/blablabla/something)
-
+cont=Content
 
 '''
 filer="/home/ubuntu/access.log"
 f=open(filer,"r")
 filew="/home/ubuntu/access.log.bak"
 g=open(filew,"w")
+c=0
 while 1:
     line=f.readline()
     if not line: break
     i=0
-    c=0
-    for i in line:
-        c=c+1
+    c=c+1
+    
     i=0
     #Select timestamp (no miliseconds)
     while 1:
@@ -56,6 +56,7 @@ while 1:
     while 1:
         if(line[i]=='/'):
             action=line[aux:i]
+            aux=i+1
             while line[i]!=' ':
                 i=i+1
             break
@@ -106,6 +107,12 @@ while 1:
     while line[i]!=' ':
         i=i+1
     i=i+1
+    #Select content
+    cont=''
+    if(action!="TCP_DENIED") & (meth!="CONNECT"):
+        cont=line[i:-1]
+
+    
                     
         
         
