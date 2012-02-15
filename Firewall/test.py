@@ -56,13 +56,20 @@ while 1:
                 i=i+1
             break
         i=i+1
-    print(action)
     #ignore Size
+    i=i+1
     while 1:
         if(line[i]==' '):
             break
         i=i+1
     while line[i]==' ':
         i=i+1
-    #Select Method    
+    #Select Method  
+    aux=i    
+    while 1:
+        if(line[i]==' '):
+            meth=line[aux:i]
+            break
+        i=i+1      
+    i=i+1
         
