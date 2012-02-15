@@ -23,6 +23,12 @@ while 1:
         i=i+1
     while line[i]==' ':
         i=i+1
+    while 1:
+        if(line[i]==' '):
+            break
+        i=i+1
+    while line[i]==' ':
+        i=i+1
 
     
     
