@@ -3,6 +3,14 @@ Created on Feb 15, 2012
 
 @author: ubuntu
 '''
+'''
+VARIABLES USED
+
+time= timestamp
+IP= originating IP
+
+
+'''
 filer="/home/ubuntu/access.log"
 f=open(filer,"r")
 filew="/home/ubuntu/access.log.bak"
@@ -29,7 +37,14 @@ while 1:
         i=i+1
     while line[i]==' ':
         i=i+1
-
+    aux=i
+    while 1:
+        if(line[i]==' '):
+            IP=line[aux:i]
+            break
+        i=i+1
+    g.write(IP+'\n')
+        
     
     
         
