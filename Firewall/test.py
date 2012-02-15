@@ -8,7 +8,7 @@ VARIABLES USED
 
 time= timestamp
 IP= originating IP
-
+action= TCP_X thingy
 
 '''
 filer="/home/ubuntu/access.log"
@@ -32,7 +32,7 @@ while 1:
         i=i+1
     while line[i]==' ':
         i=i+1
-    #Select elapsed
+    #Ignore elapsed
     while 1:
         if(line[i]==' '):
             break
@@ -49,15 +49,20 @@ while 1:
     #Select TCP_HIT/MISS/etc
     i=i+1
     aux=i    
-    ret=""
     while 1:
         if(line[i]=='/'):
-            ret=line[aux:i]
+            action=line[aux:i]
             while line[i]!=' ':
                 i=i+1
             break
         i=i+1
-    
-    
-        
+    print(action)
+    #ignore Size
+    while 1:
+        if(line[i]==' '):
+            break
+        i=i+1
+    while line[i]==' ':
+        i=i+1
+    #Select Method    
         
