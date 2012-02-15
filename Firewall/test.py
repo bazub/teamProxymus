@@ -23,6 +23,7 @@ while 1:
     for i in line:
         c=c+1
     i=0
+    #Select timestamp (no miliseconds)
     while 1:
         if(line[i]=='.'):
             time=int(line[0:i])
@@ -31,20 +32,31 @@ while 1:
         i=i+1
     while line[i]==' ':
         i=i+1
+    #Select elapsed
     while 1:
         if(line[i]==' '):
             break
         i=i+1
     while line[i]==' ':
         i=i+1
+    #Select IP
     aux=i
     while 1:
         if(line[i]==' '):
             IP=line[aux:i]
             break
         i=i+1
-    g.write(IP+'\n')
-        
+    #Select TCP_HIT/MISS/etc
+    i=i+1
+    aux=i    
+    ret=""
+    while 1:
+        if(line[i]=='/'):
+            ret=line[aux:i]
+            while line[i]!=' ':
+                i=i+1
+            break
+        i=i+1
     
     
         
