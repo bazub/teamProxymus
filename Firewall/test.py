@@ -98,9 +98,15 @@ while 1:
                 break
             i=i+1
     #Add more methods?
-    
+    i=i+1
     #Ignore next_field
-                
+    while line[i]!=' ':
+        i=i+1
+    i=i+1
+    while line[i]!=' ':
+        i=i+1
+    i=i+1
+                    
         
         
         
