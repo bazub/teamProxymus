@@ -123,6 +123,14 @@ def function():
         matrix.append(li)
 
 function()
+#create a window
+root=Tk()
+root.geometry("640x480+400+100")
+root.title("Squid-logs Statistics")
+root.bind("<Escape>", lambda e: e.widget.quit())
+root.resizable(FALSE,FALSE)
+
+root.mainloop()
                    
         
         
