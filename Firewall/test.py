@@ -15,7 +15,7 @@ flink= Full link (when meth==GET, i.e. http://google.com/blablabla/something)
 cont=Content
 li=temp line storage
 matrix (global)=Stores log entries (only needed fields)
-
+li=[IP,action,meth,link,cont]
 '''
 from tkinter import *
 
@@ -121,14 +121,41 @@ def function():
             cont=line[i:-1]
         li=[IP,action,meth,link,cont]
         matrix.append(li)
-
+def SScomm():
+    global matrix
+    ips=[]
+    counter=[]
+    li=0
+    tot=0
+    for line in matrix:
+        tot=tot+1
+        site=line[3]
+        ok=0
+        c=0
+        for i in ips:
+            if site==i:
+                counter[c]=counter[c]+1
+                ok=1
+                break
+            c=c+1
+        if ok==0:
+            ips.append(site)
+            counter.append(1)
+            li=li+1
+    for i in range(0,li):
+        print(ips[i]+' '+str(counter[i]))
+        
+        
 function()
 #create a window
 root=Tk()
 root.geometry("640x480+400+100")
-root.title("Squid-logs Statistics")
+root.title("Squid-logs Statistics©                                                                               by Proxymus")
 root.bind("<Escape>", lambda e: e.widget.quit())
 root.resizable(FALSE,FALSE)
+#Statistics-Site%
+butSS=Button(root, text="Site%", command=SScomm,width="40")
+butSS.grid(row=1,column=1)
 
 root.mainloop()
                    
