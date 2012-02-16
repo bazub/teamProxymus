@@ -142,8 +142,25 @@ def SScomm():
             ips.append(site)
             counter.append(1)
             li=li+1
+    
+    frame = Frame(root, bd=2, relief=SUNKEN)
+    yscrollbar = Scrollbar(frame)
+    yscrollbar.grid(row=0, column=1, sticky=N+S)
+    listbox = Listbox(frame,width=43)
+    listbox.grid(row=0,column=2)
     for i in range(0,li):
-        print(ips[i]+' '+str(counter[i]))
+        listbox.insert(END, ips[i])
+    listbox.config(scrollregion=(LEFT, TOP, RIGHT, BOTTOM))
+    yscrollbar.config(command=listbox.yview)
+    
+    yscroll = tk.Scrollbar(command=listbox1.yview, orient=tk.VERTICAL)
+    yscroll.grid(row=0, column=1, sticky=tk.N+tk.S)
+    listbox1.configure(yscrollcommand=yscroll.set)
+    frame.grid(row=2,column=2)
+    
+    
+    #listbox.config(yscrollcommand=scrollbar.set)
+    #scrollbar.config(command=listbox.yview)
         
         
 function()
@@ -152,10 +169,10 @@ root=Tk()
 root.geometry("640x480+400+100")
 root.title("Squid-logs Statistics©                                                                               by Proxymus")
 root.bind("<Escape>", lambda e: e.widget.quit())
-root.resizable(FALSE,FALSE)
+root.resizable(TRUE,TRUE)
 #Statistics-Site%
 butSS=Button(root, text="Site%", command=SScomm,width="40")
-butSS.grid(row=1,column=1)
+butSS.grid(row=1,column=2)
 
 root.mainloop()
                    
