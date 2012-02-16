@@ -122,6 +122,15 @@ def function():
         li=[IP,action,meth,link,cont]
         matrix.append(li)
 def SScomm():
+    def get_list(event):
+        # get selected line index
+        index = listbox.curselection()[0]
+        # get the line's text
+        seltext = listbox1.get(index)
+        # delete previous text in enter1
+        enter1.delete(0, 50)
+        # now display the selected text
+        enter1.insert(0, seltext)
     global matrix
     ips=[]
     counter=[]
@@ -144,18 +153,21 @@ def SScomm():
             li=li+1
     
     frame = Frame(root, bd=2, relief=SUNKEN)
-    yscrollbar = Scrollbar(frame)
-    yscrollbar.grid(row=0, column=1, sticky=N+S)
+    listbox1 = Listbox(frame,width=43)
+    for i in range(0,li):
+        listbox1.insert(END, counter[i])
     listbox = Listbox(frame,width=43)
     listbox.grid(row=0,column=2)
+    yscroll = Scrollbar(frame,command=listbox.yview, orient=VERTICAL)
+    yscroll.grid(row=0, column=1, sticky=N+S)
     for i in range(0,li):
         listbox.insert(END, ips[i])
-    listbox.config(scrollregion=(LEFT, TOP, RIGHT, BOTTOM))
-    yscrollbar.config(command=listbox.yview)
+    listbox.config(yscrollcommand=yscroll.set)
     
-    yscroll = tk.Scrollbar(command=listbox1.yview, orient=tk.VERTICAL)
-    yscroll.grid(row=0, column=1, sticky=tk.N+tk.S)
-    listbox1.configure(yscrollcommand=yscroll.set)
+    enter1 =Entry(frame, width=5, bg='yellow',justify=CENTER)
+    enter1.insert(0, '')
+    enter1.grid(row=0, column=3)
+    listbox.bind('<ButtonRelease-1>', get_list)
     frame.grid(row=2,column=2)
     
     
