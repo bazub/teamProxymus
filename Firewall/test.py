@@ -20,6 +20,10 @@ li=[IP,action,meth,link,cont]
 from tkinter import *
 
 matrix=[]
+ips=[]
+counter=[]
+li=0
+
 def function():
     global matrix 
     filer="/home/ubuntu/access.log"
@@ -121,17 +125,11 @@ def function():
             cont=line[i:-1]
         li=[IP,action,meth,link,cont]
         matrix.append(li)
+function()
 SSok=0
-def SScomm():
-    global SSok
-    def get_list(event):
-        index = listbox.curselection()[0]
-        seltext = listbox1.get(index)
-        enter1.delete(0, 50)
-        enter1.insert(0, seltext)
+def ipsco():
     global matrix
-    ips=[]
-    counter=[]
+    global counter,ips,li
     li=0
     tot=0
     for line in matrix:
@@ -149,8 +147,17 @@ def SScomm():
             ips.append(site)
             counter.append(1)
             li=li+1
-    frame = Frame(root,bg = 'red')
+ipsco()
+def SScomm():
+    global SSok,li,counter,ips
+    def get_list(event):
+        index = listbox.curselection()[0]
+        seltext = listbox1.get(index)
+        enter1.delete(0, 50)
+        enter1.insert(0, seltext)
+    frame = Frame(root)
     listbox1 = Listbox(frame,width=43)
+
     for i in range(0,li):
         listbox1.insert(END, counter[i])
     listbox = Listbox(frame,width=43)
@@ -160,7 +167,7 @@ def SScomm():
     for i in range(0,li):
         listbox.insert(END, ips[i])
     listbox.config(yscrollcommand=yscroll.set)
-    enter1 =Entry(frame, width=5, bg='yellow',justify=CENTER)
+    enter1 =Entry(frame, width=5, bg='white',justify=CENTER)
     enter1.insert(0, '')
     enter1.grid(row=0, column=3)
     listbox.bind('<ButtonRelease-1>', get_list)
@@ -175,7 +182,10 @@ def SScomm():
                
     SSok=1-SSok
         
-function()
+def CHcomm():
+    asd=1
+    
+
 #create a window
 root=Tk()
 root.geometry("640x480+400+100")
@@ -183,13 +193,11 @@ root.title("Squid-logs Statistics©                                             
 root.bind("<Escape>", lambda e: e.widget.quit())
 root.resizable(TRUE,TRUE)
 #Statistics-Site%
-butSS=Button(root, text="Site%", command=SScomm,width="49")
-butSS.grid(row=0,column=0)
-
-
+frbut=Frame(root,width=100)
+frbut.grid(row=0,columnspan=2)
+Label(frbut,text="      ").grid(row=0,column=0)
+butSS=Button(frbut, text="Site%", command=SScomm,width="20")
+butSS.grid(row=0,column=1)
+butCH=Button(frbut, text="Chart", command=CHcomm,width="20")
+butCH.grid(row=0,column=2)
 root.mainloop()
-                   
-        
-        
-        
-        
