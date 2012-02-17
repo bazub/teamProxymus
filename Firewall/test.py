@@ -126,7 +126,6 @@ def function():
         li=[IP,action,meth,link,cont]
         matrix.append(li)
 function()
-SSok=0
 def ipsco():
     global matrix
     global counter,ips,li
@@ -148,6 +147,7 @@ def ipsco():
             counter.append(1)
             li=li+1
 ipsco()
+SSok=0
 def SScomm():
     global SSok,li,counter,ips
     def get_list(event):
@@ -181,9 +181,21 @@ def SScomm():
         #lab.grid(row=2,column=2)
                
     SSok=1-SSok
-        
+CHok=0        
 def CHcomm():
-    asd=1
+    global CHok,counter,ips
+    for i in range(li):
+        for j in range(i+1,li):
+            if(counter[j]>counter[i]):
+                aux=counter[j]
+                counter[j]=counter[i]
+                counter[i]=aux
+                aux=ips[j]
+                ips[j]=ips[i]
+                ips[i]=aux
+
+    
+    CHok=1-CHok
     
 
 #create a window
