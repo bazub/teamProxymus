@@ -18,6 +18,7 @@ matrix (global)=Stores log entries (only needed fields)
 li=[IP,action,meth,link,cont]
 '''
 from tkinter import *
+from math import *
 
 matrix=[]
 ips=[]
@@ -28,8 +29,8 @@ def function():
     global matrix 
     filer="/home/ubuntu/access.log"
     f=open(filer,"r")
-    filew="/home/ubuntu/access.log.bak"
-    g=open(filew,"w")
+    #filew="/home/ubuntu/access.log.bak"
+    #g=open(filew,"w")
     c=0
     
     while 1:
@@ -128,7 +129,7 @@ def function():
 function()
 def ipsco():
     global matrix
-    global counter,ips,li
+    global counter,ips,li,tot
     li=0
     tot=0
     for line in matrix:
@@ -161,15 +162,17 @@ def sortipsco():
 sortipsco()
 SSok=0
 def SScomm():
-    global SSok,li,counter,ips
+    global SSok,li,counter,ips,CHok
+    CHok=0
     def get_list(event):
         index = listbox.curselection()[0]
         seltext = listbox1.get(index)
         enter1.delete(0, 50)
         enter1.insert(0, seltext)
+    lab=Label(root,width=71,height=11)
+    lab.grid(row=1,column=0)
     frame = Frame(root)
     listbox1 = Listbox(frame,width=43)
-
     for i in range(0,li):
         listbox1.insert(END, counter[i])
     listbox = Listbox(frame,width=43)
@@ -183,36 +186,73 @@ def SScomm():
     enter1.insert(0, '')
     enter1.grid(row=0, column=3)
     listbox.bind('<ButtonRelease-1>', get_list)
-    lab=Label(root,width=51,height=11)
+    
     if SSok==0:
-        lab.destroy()
+        #lab.destroy()
         frame.grid(row=1,column=0)
     else:
-        frame.destroy()
+        #frame.destroy()
         lab.grid(row=1,column=0)
         #lab.grid(row=2,column=2)
                
     SSok=1-SSok
 CHok=0        
 def CHcomm():
-    global CHok,counter,ips
-
+    global CHok,counter,ips,SSok
+    SSok=0
+    lab=Label(root,width=71,height=11)
+    lab.grid(row=1,column=0)
+    frame=Frame(root)
+    listbox2 = Listbox(frame,width=36)
+    listbox2.grid(row=0,column=2)
+    yscroll = Scrollbar(frame,command=listbox2.yview, orient=VERTICAL)
+    yscroll.grid(row=0, column=1, sticky=N+S)
+    for i in range(0,7):
+        listbox2.insert(END, ips[i])
+    listbox2.insert(END,"Others")
+    listbox2.config(yscrollcommand=yscroll.set)
+    listbox3 = Listbox(frame,width=7)
+    listbox3.grid(row=0,column=3)
+    s=0
+    for i in range(0,7):
+        listbox3.insert(END, str(ceil(counter[i]/tot*100))+'%')
+        s=s+counter[i]
+    listbox3.insert(END,str(floor((tot-s)/tot*100))+'%')
+    canvas=Canvas(frame,width=200,height=156,border=3,relief="groove",bg="white")
+    canvas.grid(row=0,column=4)
+    x=5
+    colors=["cyan","red","orange","yellow","green","blue","gray","purple"]
+    for i in range(0,7):
+        canvas.create_rectangle(0, x, ceil(counter[i]/tot*200), x+12, fill=colors[i])
+        x=x+16
+        
+    canvas.create_rectangle(0,x,floor((tot-s)/tot*200),x+12,fill=colors[7])
+        
     
-    
+    if CHok==0:
+        #lab.destroy()
+        frame.grid(row=1,column=0,sticky=W)
+    else:
+        #frame.destroy()
+        lab.grid(row=1,column=0)
     CHok=1-CHok
     
 
 #create a window
 root=Tk()
 root.geometry("640x480+400+100")
-root.title("Squid-logs Statistics©                                                                               by Proxymus")
+root.title("Squid-logs Statistics©                                                                            by Proxymus")
 root.bind("<Escape>", lambda e: e.widget.quit())
 root.resizable(TRUE,TRUE)
 #Statistics-Site%
+def init():
+    lab=Label(root,width=71,height=11)
+    lab.grid(row=1,column=0)
+init()
 frbut=Frame(root,width=100)
-frbut.grid(row=0,columnspan=2)
+frbut.grid(row=0)
 Label(frbut,text="      ").grid(row=0,column=0)
-butSS=Button(frbut, text="Site%", command=SScomm,width="20")
+butSS=Button(frbut, text="Sites", command=SScomm,width="20")
 butSS.grid(row=0,column=1)
 butCH=Button(frbut, text="Chart", command=CHcomm,width="20")
 butCH.grid(row=0,column=2)
