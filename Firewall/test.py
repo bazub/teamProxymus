@@ -4,6 +4,7 @@ Created on Feb 15, 2012
 @author: ubuntu
 '''
 '''
+
 VARIABLES USED
 
 time= timestamp
@@ -21,9 +22,11 @@ from tkinter import *
 from math import *
 
 matrix=[]
-ips=[]
+links=[]
 counter=[]
 li=0
+ips=[]
+cips=[]
 
 def function():
     global matrix 
@@ -129,7 +132,7 @@ def function():
 function()
 def ipsco():
     global matrix
-    global counter,ips,li,tot
+    global counter,links,li,tot
     li=0
     tot=0
     for line in matrix:
@@ -137,32 +140,50 @@ def ipsco():
         site=line[3]
         ok=0
         c=0
-        for i in ips:
+        for i in links:
             if site==i:
                 counter[c]=counter[c]+1
                 ok=1
                 break
             c=c+1
         if ok==0:
-            ips.append(site)
+            links.append(site)
             counter.append(1)
             li=li+1
 ipsco()
+def ipblocked():
+    global matrix,li2
+    li2=0
+    for line in matrix:
+        ip=line[0]
+        ok=0
+        c=0
+        for i in ips:
+            if ip==i:
+                cips[c]=cips[c]+1
+                ok=1
+                break
+            c=c+1
+        if ok==0:
+            ips.append(ip)
+            cips.append(1)
+ipblocked()
+
 def sortipsco():
-    global CHok,counter,ips
+    global CHok,counter,links
     for i in range(li):
         for j in range(i+1,li):
             if(counter[j]>counter[i]):
                 aux=counter[j]
                 counter[j]=counter[i]
                 counter[i]=aux
-                aux=ips[j]
-                ips[j]=ips[i]
-                ips[i]=aux
+                aux=links[j]
+                links[j]=links[i]
+                links[i]=aux
 sortipsco()
 SSok=0
 def SScomm():
-    global SSok,li,counter,ips,CHok
+    global SSok,li,counter,links,CHok
     CHok=0
     def get_list(event):
         index = listbox.curselection()[0]
@@ -180,7 +201,7 @@ def SScomm():
     yscroll = Scrollbar(frame,command=listbox.yview, orient=VERTICAL)
     yscroll.grid(row=0, column=1, sticky=N+S)
     for i in range(0,li):
-        listbox.insert(END, ips[i])
+        listbox.insert(END, links[i])
     listbox.config(yscrollcommand=yscroll.set)
     enter1 =Entry(frame, width=5, bg='white',justify=CENTER)
     enter1.insert(0, '')
@@ -198,7 +219,7 @@ def SScomm():
     SSok=1-SSok
 CHok=0        
 def CHcomm():
-    global CHok,counter,ips,SSok
+    global CHok,counter,links,SSok
     SSok=0
     lab=Label(root,width=71,height=11)
     lab.grid(row=1,column=0)
@@ -208,7 +229,7 @@ def CHcomm():
     yscroll = Scrollbar(frame,command=listbox2.yview, orient=VERTICAL)
     yscroll.grid(row=0, column=1, sticky=N+S)
     for i in range(0,7):
-        listbox2.insert(END, ips[i])
+        listbox2.insert(END, links[i])
     listbox2.insert(END,"Others")
     listbox2.config(yscrollcommand=yscroll.set)
     listbox3 = Listbox(frame,width=7)
