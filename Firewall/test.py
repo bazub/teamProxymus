@@ -121,15 +121,13 @@ def function():
             cont=line[i:-1]
         li=[IP,action,meth,link,cont]
         matrix.append(li)
+SSok=0
 def SScomm():
+    global SSok
     def get_list(event):
-        # get selected line index
         index = listbox.curselection()[0]
-        # get the line's text
         seltext = listbox1.get(index)
-        # delete previous text in enter1
         enter1.delete(0, 50)
-        # now display the selected text
         enter1.insert(0, seltext)
     global matrix
     ips=[]
@@ -151,8 +149,7 @@ def SScomm():
             ips.append(site)
             counter.append(1)
             li=li+1
-    
-    frame = Frame(root, bd=2, relief=SUNKEN)
+    frame = Frame(root,bg = 'red')
     listbox1 = Listbox(frame,width=43)
     for i in range(0,li):
         listbox1.insert(END, counter[i])
@@ -163,17 +160,20 @@ def SScomm():
     for i in range(0,li):
         listbox.insert(END, ips[i])
     listbox.config(yscrollcommand=yscroll.set)
-    
     enter1 =Entry(frame, width=5, bg='yellow',justify=CENTER)
     enter1.insert(0, '')
     enter1.grid(row=0, column=3)
     listbox.bind('<ButtonRelease-1>', get_list)
-    frame.grid(row=2,column=2)
-    
-    
-    #listbox.config(yscrollcommand=scrollbar.set)
-    #scrollbar.config(command=listbox.yview)
-        
+    lab=Label(root,width=51,height=11)
+    if SSok==0:
+        lab.destroy()
+        frame.grid(row=1,column=0)
+    else:
+        frame.destroy()
+        lab.grid(row=1,column=0)
+        #lab.grid(row=2,column=2)
+               
+    SSok=1-SSok
         
 function()
 #create a window
@@ -183,8 +183,9 @@ root.title("Squid-logs Statistics©                                             
 root.bind("<Escape>", lambda e: e.widget.quit())
 root.resizable(TRUE,TRUE)
 #Statistics-Site%
-butSS=Button(root, text="Site%", command=SScomm,width="40")
-butSS.grid(row=1,column=2)
+butSS=Button(root, text="Site%", command=SScomm,width="49")
+butSS.grid(row=0,column=0)
+
 
 root.mainloop()
                    
