@@ -151,6 +151,7 @@ def ipsco():
             counter.append(1)
             li=li+1
 ipsco()
+li2=0
 def ipblocked():
     global matrix,li2
     li2=0
@@ -167,6 +168,7 @@ def ipblocked():
         if ok==0:
             ips.append(ip)
             cips.append(1)
+            li2=li2+1
 ipblocked()
 
 def sortipsco():
@@ -183,15 +185,16 @@ def sortipsco():
 sortipsco()
 SSok=0
 def SScomm():
-    global SSok,li,counter,links,CHok
+    global SSok,li,counter,links,CHok,IPok
     CHok=0
+    IPok=0
     def get_list(event):
         index = listbox.curselection()[0]
         seltext = listbox1.get(index)
         enter1.delete(0, 50)
         enter1.insert(0, seltext)
     lab=Label(root,width=71,height=11)
-    lab.grid(row=1,column=0)
+    lab.grid(row=1,column=0,sticky=W)
     frame = Frame(root)
     listbox1 = Listbox(frame,width=43)
     for i in range(0,li):
@@ -210,19 +213,20 @@ def SScomm():
     
     if SSok==0:
         #lab.destroy()
-        frame.grid(row=1,column=0)
+        frame.grid(row=1,column=0,sticky=W)
     else:
         #frame.destroy()
-        lab.grid(row=1,column=0)
+        lab.grid(row=1,column=0,sticky=W)
         #lab.grid(row=2,column=2)
                
     SSok=1-SSok
 CHok=0        
 def CHcomm():
-    global CHok,counter,links,SSok
+    global CHok,counter,links,SSok,IPok
     SSok=0
+    IPok=0
     lab=Label(root,width=71,height=11)
-    lab.grid(row=1,column=0)
+    lab.grid(row=1,column=0,sticky=W)
     frame=Frame(root)
     listbox2 = Listbox(frame,width=36)
     listbox2.grid(row=0,column=2)
@@ -255,10 +259,51 @@ def CHcomm():
         frame.grid(row=1,column=0,sticky=W)
     else:
         #frame.destroy()
-        lab.grid(row=1,column=0)
+        lab.grid(row=1,column=0,sticky=W)
     CHok=1-CHok
+IPok=0
+def IPcomm():
+    global ips,IPok,matrix,cips,SSok,CHok
+    CHok=0
+    SSok=0
+    lab=Label(root,width=71,height=11)
+    lab.grid(row=1,column=0,sticky=W)
+    frame=Frame(root)
+    listbox4 = Listbox(frame,width=36)
+    listbox4.grid(row=0,column=2)
+    yscroll = Scrollbar(frame,command=listbox4.yview, orient=VERTICAL)
+    yscroll.grid(row=0, column=1, sticky=N+S)
+    listbox4.insert(END,"  ")
+    for i in range(0,li2):
+        listbox4.insert(END, ips[i])
+    listbox4.config(yscrollcommand=yscroll.set)
+    listbox5 = Listbox(frame,width=7)
+    listbox5.grid(row=0,column=3)
+    listbox6 = Listbox(frame,width=7)
+    listbox6.grid(row=0,column=4)
+    listbox7 = Listbox(frame,width=7)
+    listbox7.grid(row=0,column=5)
+    listbox5.insert(END,"Allowed")
+    listbox6.insert(END,"Denied")
+    listbox7.insert(END,"Total")
+    for i in range(0,li2):
+        c=0
+        for j in matrix:
+            if j[0]==ips[i]:
+                if j[1][4]=='D':
+                    c=c+1
+        listbox5.insert(END,str(cips[i]-c))
+        listbox6.insert(END,str(c))
+        listbox7.insert(END,str(cips[i]))
     
-
+    if IPok==0:
+        #lab.destroy()
+        frame.grid(row=1,column=0,sticky=W)
+    else:
+        #frame.destroy()
+        lab.grid(row=1,column=0,sticky=W)
+        
+    IPok=1-IPok
 #create a window
 root=Tk()
 root.geometry("640x480+400+100")
@@ -277,4 +322,6 @@ butSS=Button(frbut, text="Sites", command=SScomm,width="20")
 butSS.grid(row=0,column=1)
 butCH=Button(frbut, text="Chart", command=CHcomm,width="20")
 butCH.grid(row=0,column=2)
+butIP=Button(frbut,text="IP stats",command=IPcomm,width="20")
+butIP.grid(row=0,column=3)
 root.mainloop()
