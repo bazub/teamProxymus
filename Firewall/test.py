@@ -147,6 +147,18 @@ def ipsco():
             counter.append(1)
             li=li+1
 ipsco()
+def sortipsco():
+    global CHok,counter,ips
+    for i in range(li):
+        for j in range(i+1,li):
+            if(counter[j]>counter[i]):
+                aux=counter[j]
+                counter[j]=counter[i]
+                counter[i]=aux
+                aux=ips[j]
+                ips[j]=ips[i]
+                ips[i]=aux
+sortipsco()
 SSok=0
 def SScomm():
     global SSok,li,counter,ips
@@ -184,16 +196,8 @@ def SScomm():
 CHok=0        
 def CHcomm():
     global CHok,counter,ips
-    for i in range(li):
-        for j in range(i+1,li):
-            if(counter[j]>counter[i]):
-                aux=counter[j]
-                counter[j]=counter[i]
-                counter[i]=aux
-                aux=ips[j]
-                ips[j]=ips[i]
-                ips[i]=aux
 
+    
     
     CHok=1-CHok
     
