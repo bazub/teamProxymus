@@ -131,7 +131,7 @@ def function():
         cont=''
         if(action!="TCP_DENIED") & (meth!="CONNECT"):
             cont=line[i:-1]
-        li=[IP,action,meth,link,cont]
+        li=[IP,action,meth,link,cont,time]
         matrix.append(li)
     f.close()
 function()
@@ -192,6 +192,7 @@ def sortipsco():
                 links[j]=links[i]
                 links[i]=aux
 sortipsco()
+
 def finit():
     global fsize
     b=os.path.getsize("/home/ubuntu/access.log")
@@ -283,6 +284,10 @@ def CHcomm():
         lab.grid(row=1,column=0,sticky=W)
     CHok=1-CHok
 IPok=0
+def LIcomm():
+    asd=1
+    
+
 def IPcomm():
     global ips,IPok,matrix,cips,SSok,CHok
     finit()
@@ -317,16 +322,17 @@ def IPcomm():
         listbox5.insert(END,str(cips[i]-c))
         listbox6.insert(END,str(c))
         listbox7.insert(END,str(cips[i]))
-    
+    butLI=Button(frame,text="history",command=LIcomm)
+    butLI.grid(row=0,column=6)
     if IPok==0:
         #lab.destroy()
         frame.grid(row=1,column=0,sticky=W)
     else:
         #frame.destroy()
         lab.grid(row=1,column=0,sticky=W)
-        
     IPok=1-IPok
-#create a window
+
+#Main
 root=Tk()
 root.geometry("640x480+400+100")
 root.title("Squid-logs Statistics©                                                                            by Proxymus")
