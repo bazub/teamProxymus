@@ -20,6 +20,7 @@ li=[IP,action,meth,link,cont]
 '''
 from tkinter import *
 from math import *
+import os
 
 matrix=[]
 links=[]
@@ -27,9 +28,12 @@ counter=[]
 li=0
 ips=[]
 cips=[]
+fsize=os.path.getsize("/home/ubuntu/access.log")
+print(fsize)
 
 def function():
     global matrix 
+    matrix=[]
     filer="/home/ubuntu/access.log"
     f=open(filer,"r")
     #filew="/home/ubuntu/access.log.bak"
@@ -129,10 +133,13 @@ def function():
             cont=line[i:-1]
         li=[IP,action,meth,link,cont]
         matrix.append(li)
+    f.close()
 function()
 def ipsco():
     global matrix
     global counter,links,li,tot
+    counter=[]
+    links=[]
     li=0
     tot=0
     for line in matrix:
@@ -153,7 +160,9 @@ def ipsco():
 ipsco()
 li2=0
 def ipblocked():
-    global matrix,li2
+    global matrix,li2,cips,ips
+    cips=[]
+    ips=[]
     li2=0
     for line in matrix:
         ip=line[0]
@@ -172,7 +181,7 @@ def ipblocked():
 ipblocked()
 
 def sortipsco():
-    global CHok,counter,links
+    global counter,links
     for i in range(li):
         for j in range(i+1,li):
             if(counter[j]>counter[i]):
@@ -183,9 +192,20 @@ def sortipsco():
                 links[j]=links[i]
                 links[i]=aux
 sortipsco()
+def finit():
+    global fsize
+    b=os.path.getsize("/home/ubuntu/access.log")
+    if b!=fsize:
+        fsize=b
+        function()
+        ipsco()
+        ipblocked()
+        sortipsco()
+    
 SSok=0
 def SScomm():
     global SSok,li,counter,links,CHok,IPok
+    finit()
     CHok=0
     IPok=0
     def get_list(event):
@@ -223,6 +243,7 @@ def SScomm():
 CHok=0        
 def CHcomm():
     global CHok,counter,links,SSok,IPok
+    finit()
     SSok=0
     IPok=0
     lab=Label(root,width=71,height=11)
@@ -264,6 +285,7 @@ def CHcomm():
 IPok=0
 def IPcomm():
     global ips,IPok,matrix,cips,SSok,CHok
+    finit()
     CHok=0
     SSok=0
     lab=Label(root,width=71,height=11)
@@ -309,7 +331,7 @@ root=Tk()
 root.geometry("640x480+400+100")
 root.title("Squid-logs Statistics©                                                                            by Proxymus")
 root.bind("<Escape>", lambda e: e.widget.quit())
-root.resizable(TRUE,TRUE)
+root.resizable(FALSE,FALSE)
 #Statistics-Site%
 def init():
     lab=Label(root,width=71,height=11)
