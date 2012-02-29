@@ -29,7 +29,6 @@ li=0
 ips=[]
 cips=[]
 fsize=os.path.getsize("/home/ubuntu/access.log")
-print(fsize)
 
 def function():
     global matrix 
