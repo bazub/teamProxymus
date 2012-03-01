@@ -2,6 +2,8 @@
 Created on Feb 15, 2012
 
 @author: ubuntu
+import subprocess
+subprocess.call
 '''
 '''
 
@@ -18,9 +20,22 @@ li=temp line storage
 matrix (global)=Stores log entries (only needed fields)
 li=[IP,action,meth,link,cont]
 '''
+
+
+'''
+import tkFileDialog
+import tkMessageBox
+
+fout=asksaveasfilename(title="Save as..",defaultextension=".log",filetypes=["(*.log)"])
+print (fout)
+
+
+
+'''
 from tkinter import *
 from math import *
 import os
+from tkinter.messagebox import *
 
 matrix=[]
 links=[]
@@ -284,11 +299,18 @@ def CHcomm():
     CHok=1-CHok
 IPok=0
 def LIcomm():
-    asd=1
-    
-
+    global IPi
+    try:
+        print (IPi)
+        filew="/home/ubuntu/newlog.log"
+        g=open(filew,"w")
+        
+        
+        showwarning(" ","The full history has been\n saved successfuly")
+    except KeyError:
+        asd=1
 def IPcomm():
-    global ips,IPok,matrix,cips,SSok,CHok
+    global ips,IPok,matrix,cips,SSok,CHok,IPi
     finit()
     CHok=0
     SSok=0
@@ -303,6 +325,9 @@ def IPcomm():
     for i in range(0,li2):
         listbox4.insert(END, ips[i])
     listbox4.config(yscrollcommand=yscroll.set)
+    def get_list(event):
+        IPi= listbox4.curselection()[0]
+        print(IPi)
     listbox5 = Listbox(frame,width=7)
     listbox5.grid(row=0,column=3)
     listbox6 = Listbox(frame,width=7)
@@ -321,6 +346,7 @@ def IPcomm():
         listbox5.insert(END,str(cips[i]-c))
         listbox6.insert(END,str(c))
         listbox7.insert(END,str(cips[i]))
+    listbox4.bind('<ButtonRelease-1>', get_list)
     butLI=Button(frame,text="history",command=LIcomm)
     butLI.grid(row=0,column=6)
     if IPok==0:
