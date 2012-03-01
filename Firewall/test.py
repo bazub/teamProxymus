@@ -297,18 +297,18 @@ def CHcomm():
         #frame.destroy()
         lab.grid(row=1,column=0,sticky=W)
     CHok=1-CHok
-IPok=0
 def LIcomm():
     global IPi
     try:
-        print (IPi)
-        filew="/home/ubuntu/newlog.log"
-        g=open(filew,"w")
-        
-        
-        showwarning(" ","The full history has been\n saved successfuly")
-    except KeyError:
+        if IPi>0:
+            
+            filew="/home/ubuntu/newlog.log"
+            g=open(filew,"w")
+           
+            showwarning(" ","The full history has been\n saved successfuly")
+    except NameError:
         asd=1
+IPok=0
 def IPcomm():
     global ips,IPok,matrix,cips,SSok,CHok,IPi
     finit()
@@ -326,8 +326,8 @@ def IPcomm():
         listbox4.insert(END, ips[i])
     listbox4.config(yscrollcommand=yscroll.set)
     def get_list(event):
-        IPi= listbox4.curselection()[0]
-        print(IPi)
+        global IPi
+        IPi= int(listbox4.curselection()[0])
     listbox5 = Listbox(frame,width=7)
     listbox5.grid(row=0,column=3)
     listbox6 = Listbox(frame,width=7)
