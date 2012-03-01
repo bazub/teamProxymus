@@ -20,22 +20,11 @@ li=temp line storage
 matrix (global)=Stores log entries (only needed fields)
 li=[IP,action,meth,link,cont]
 '''
-
-
-'''
-import tkFileDialog
-import tkMessageBox
-
-fout=asksaveasfilename(title="Save as..",defaultextension=".log",filetypes=["(*.log)"])
-print (fout)
-
-
-
-'''
 from tkinter import *
 from math import *
 import os
 from tkinter.messagebox import *
+from tkinter.filedialog import *
 
 matrix=[]
 links=[]
@@ -297,15 +286,22 @@ def CHcomm():
         #frame.destroy()
         lab.grid(row=1,column=0,sticky=W)
     CHok=1-CHok
+def nt():
+    asd=1
 def LIcomm():
-    global IPi
+    global IPi,matrix
     try:
         if IPi>0:
+            f=0
+            f=asksaveasfilename(defaultextension=".log",filetypes=[("Log file",".log"),("text",".txt")],initialdir="~/")
+            if(f!=0 and len(f)):
+                fout=open(f,"w")
+                for line in matrix:
+                    time=nt(line[-1])
+                    fout.write(str(IPi))
+                showwarning(" ","The full history has been\n saved successfuly")
+                fout.close()
             
-            filew="/home/ubuntu/newlog.log"
-            g=open(filew,"w")
-           
-            showwarning(" ","The full history has been\n saved successfuly")
     except NameError:
         asd=1
 IPok=0
