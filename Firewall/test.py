@@ -18,7 +18,7 @@ flink= Full link (when meth==GET, i.e. http://google.com/blablabla/something)
 cont=Content
 li=temp line storage
 matrix (global)=Stores log entries (only needed fields)
-li=[IP,action,meth,link,cont]
+li=[IP,action,meth,link,cont,time]
 '''
 from tkinter import *
 from math import *
@@ -32,6 +32,7 @@ counter=[]
 li=0
 ips=[]
 cips=[]
+IPip=0
 fsize=os.path.getsize("/home/ubuntu/access.log")
 
 def function():
@@ -39,8 +40,7 @@ def function():
     matrix=[]
     filer="/home/ubuntu/access.log"
     f=open(filer,"r")
-    #filew="/home/ubuntu/access.log.bak"
-    #g=open(filew,"w")
+
     c=0
     
     while 1:
@@ -134,7 +134,7 @@ def function():
         cont=''
         if(action!="TCP_DENIED") & (meth!="CONNECT"):
             cont=line[i:-1]
-        li=[IP,action,meth,link,cont,time]
+        li=[IP,action,meth,link,cont,flink,time]
         matrix.append(li)
     f.close()
 function()
@@ -347,9 +347,9 @@ def nt(time):
         m='0'+str(m)
     if s<10:
         s='0'+str(s)
-    return(str(h)+':'+str(m)+':'+str(s)+' '+str(d)+' '+cm+' '+str(year)+"\t\t")
+    return(str(h)+':'+str(m)+':'+str(s)+' '+str(d)+' '+cm+' '+str(year)+"\t")
 def LIcomm():
-    global IPi,matrix
+    global IPi,matrix,IPip
     try:
         if IPi>0:
             f=0
@@ -357,9 +357,9 @@ def LIcomm():
             if(f!=0 and len(f)):
                 fout=open(f,"w")
                 for line in matrix:
-                    
-                    time=nt(line[-1])
-                    fout.write(str(IPi))
+                    if str(line[0])==str(IPip):
+                        time=nt(line[-1])
+                        fout.write(time+IPip+'\t'+line[-2]+'\n')
                 showwarning(" ","The full history has been\n saved successfuly")
                 fout.close()
             
@@ -367,7 +367,7 @@ def LIcomm():
         asd=1
 IPok=0
 def IPcomm():
-    global ips,IPok,matrix,cips,SSok,CHok,IPi
+    global ips,IPok,matrix,cips,SSok,CHok,IPi,IPip
     finit()
     CHok=0
     SSok=0
@@ -383,8 +383,9 @@ def IPcomm():
         listbox4.insert(END, ips[i])
     listbox4.config(yscrollcommand=yscroll.set)
     def get_list(event):
-        global IPi
+        global IPi,IPip
         IPi= int(listbox4.curselection()[0])
+        IPip=listbox4.get(IPi)
     listbox5 = Listbox(frame,width=7)
     listbox5.grid(row=0,column=3)
     listbox6 = Listbox(frame,width=7)
