@@ -286,8 +286,48 @@ def CHcomm():
         #frame.destroy()
         lab.grid(row=1,column=0,sticky=W)
     CHok=1-CHok
-def nt():
-    asd=1
+def nt(time):
+    year=1970
+    months=(31,28,31,30,31,30,31,31,30,31,30,31)
+    monthso=(31,29,31,30,31,30,31,31,30,31,30,31)
+    cm=0
+    mon=("January","February","March","April","May","June","July","August","September","October","November","December")
+    while time>0:
+        if year%4!=0 and time>=31536000:
+            year=year+1
+            time=time-31536000
+        elif time>=31622400:
+            year=year+1
+            time=time-31622400
+        else:
+            if year%4!=0:
+                for mo in months:
+                    if time>mo*24*60*60:
+                        cm=cm+1
+                        time=time-mo*24*60*60
+                    else:
+                        h=time/(60*60)
+                        time=time-h*3600
+                        m=time/60
+                        time=time-m*60
+                        s=time
+                        time=0
+            else:
+                for mo in monthso:
+                    if time>mo*24*60*60:
+                        cm=cm+1
+                        time=time-mo*24*60*60
+                    else:
+                        d=time/(60*60*24)
+                        time=time-d*60*60*24
+                        h=time/(60*60)
+                        time=time-h*3600
+                        m=time/60
+                        time=time-m*60
+                        s=time
+                        time=0
+    cm=mon[cm]
+    print(str(d)+' '+cm+' '+str(year))
 def LIcomm():
     global IPi,matrix
     try:
