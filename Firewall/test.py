@@ -291,6 +291,10 @@ def nt(time):
     months=(31,28,31,30,31,30,31,31,30,31,30,31)
     monthso=(31,29,31,30,31,30,31,31,30,31,30,31)
     cm=0
+    d=0
+    h=0
+    m=0
+    s=0
     mon=("January","February","March","April","May","June","July","August","September","October","November","December")
     while time>0:
         if year%4!=0 and time>=31536000:
@@ -302,32 +306,48 @@ def nt(time):
         else:
             if year%4!=0:
                 for mo in months:
-                    if time>mo*24*60*60:
+                    if time>=mo*24*60*60:
                         cm=cm+1
                         time=time-mo*24*60*60
                     else:
-                        h=time/(60*60)
-                        time=time-h*3600
-                        m=time/60
-                        time=time-m*60
+                        while time>=24*60*60:
+                            d=d+1
+                            time=time-24*60*60
+                        while time>=60*60:
+                            h=h+1
+                            time=time-60*60
+                        while time>=60:
+                            m=m+1
+                            time=time-60
                         s=time
                         time=0
+                        break
             else:
                 for mo in monthso:
-                    if time>mo*24*60*60:
+                    if time>=mo*24*60*60:
                         cm=cm+1
                         time=time-mo*24*60*60
                     else:
-                        d=time/(60*60*24)
-                        time=time-d*60*60*24
-                        h=time/(60*60)
-                        time=time-h*3600
-                        m=time/60
-                        time=time-m*60
+                        while time>=24*60*60:
+                            d=d+1
+                            time=time-24*60*60
+                        while time>=60*60:
+                            h=h+1
+                            time=time-60*60
+                        while time>=60:
+                            m=m+1
+                            time=time-60
                         s=time
                         time=0
+                        break
     cm=mon[cm]
-    print(str(d)+' '+cm+' '+str(year))
+    if h<10:
+        h='0'+str(h)
+    if m<10:
+        m='0'+str(m)
+    if s<10:
+        s='0'+str(s)
+    return(str(h)+':'+str(m)+':'+str(s)+' '+str(d)+' '+cm+' '+str(year)+"\t\t")
 def LIcomm():
     global IPi,matrix
     try:
@@ -337,6 +357,7 @@ def LIcomm():
             if(f!=0 and len(f)):
                 fout=open(f,"w")
                 for line in matrix:
+                    
                     time=nt(line[-1])
                     fout.write(str(IPi))
                 showwarning(" ","The full history has been\n saved successfuly")
