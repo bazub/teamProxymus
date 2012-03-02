@@ -19,12 +19,15 @@ cont=Content
 li=temp line storage
 matrix (global)=Stores log entries (only needed fields)
 li=[IP,action,meth,link,cont,time]
+
+subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
 '''
 from tkinter import *
 from math import *
 import os
 from tkinter.messagebox import *
 from tkinter.filedialog import *
+import subprocess
 
 matrix=[]
 links=[]
@@ -33,11 +36,13 @@ li=0
 ips=[]
 cips=[]
 IPip=0
+subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
 fsize=os.path.getsize("/home/ubuntu/access.log")
 
 def function():
     global matrix 
     matrix=[]
+    subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
     filer="/home/ubuntu/access.log"
     f=open(filer,"r")
 
@@ -198,6 +203,7 @@ sortipsco()
 
 def finit():
     global fsize
+    subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
     b=os.path.getsize("/home/ubuntu/access.log")
     if b!=fsize:
         fsize=b
