@@ -36,13 +36,13 @@ li=0
 ips=[]
 cips=[]
 IPip=0
-subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
+#subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
 fsize=os.path.getsize("/home/ubuntu/access.log")
 
 def function():
     global matrix 
     matrix=[]
-    subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
+    #subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
     filer="/home/ubuntu/access.log"
     f=open(filer,"r")
 
@@ -51,7 +51,8 @@ def function():
     while 1:
         li=[]
         line=f.readline()
-        if not line: break
+        if not line: 
+            break
         i=0
         c=c+1
         i=0
@@ -203,7 +204,7 @@ sortipsco()
 
 def finit():
     global fsize
-    subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
+    #subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
     b=os.path.getsize("/home/ubuntu/access.log")
     if b!=fsize:
         fsize=b
@@ -263,14 +264,17 @@ def CHcomm():
     listbox2.grid(row=0,column=2)
     yscroll = Scrollbar(frame,command=listbox2.yview, orient=VERTICAL)
     yscroll.grid(row=0, column=1, sticky=N+S)
-    for i in range(0,7):
+    min=7
+    if li<min:
+        min=li
+    for i in range(0,min):
         listbox2.insert(END, links[i])
     listbox2.insert(END,"Others")
     listbox2.config(yscrollcommand=yscroll.set)
     listbox3 = Listbox(frame,width=7)
     listbox3.grid(row=0,column=3)
     s=0
-    for i in range(0,7):
+    for i in range(0,min):
         listbox3.insert(END, str(ceil(counter[i]/tot*100))+'%')
         s=s+counter[i]
     listbox3.insert(END,str(floor((tot-s)/tot*100))+'%')
@@ -278,7 +282,7 @@ def CHcomm():
     canvas.grid(row=0,column=4)
     x=5
     colors=["cyan","red","orange","yellow","green","blue","gray","purple"]
-    for i in range(0,7):
+    for i in range(0,min):
         canvas.create_rectangle(0, x, ceil(counter[i]/tot*200), x+12, fill=colors[i])
         x=x+16
         
