@@ -17,6 +17,6 @@ def PIcomm():
 
 butPI=Button(root, text="Check Apache", command=PIcomm,width="20")
 butPI.grid(row=0,column=1)
-subprocess.call("scp root@10.140.16.47:/var/log/squid/access.log ~/")
+subprocess.call("F:\pscp -pw test boog@10.131.16.82:Desktop/asd.log F:\ ")
 
 root.mainloop()    
