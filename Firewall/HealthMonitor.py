@@ -1,13 +1,22 @@
 import subprocess
+from tkinter.messagebox import *
+from tkinter import *
+
 
 root=Tk()
 root.geometry("640x480+400+100")
-root.title("Squid-logs Statistics©                                                                            by Proxymus")
+root.title("HM HealthMonitor©                                                                    by Proxymus")
 root.bind("<Escape>", lambda e: e.widget.quit())
 root.resizable(FALSE,FALSE)
-
-while 1:
-    a=subprocess.call("PING 10.140.32.74")
+def PIcomm():
+    a=subprocess.call("PING 10.140.32.75")
     if a:
-        
-    
+        showwarning("ERROR!!","Your Apache server is down!")
+    else:
+        showwarning(" ","Your Apache serves is online!")
+
+butPI=Button(root, text="Check Apache", command=PIcomm,width="20")
+butPI.grid(row=0,column=1)
+
+
+root.mainloop()    
