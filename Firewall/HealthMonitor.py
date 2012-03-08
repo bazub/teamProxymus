@@ -9,14 +9,6 @@ root.title("HM HealthMonitor©                                                  
 root.bind("<Escape>", lambda e: e.widget.quit())
 root.resizable(FALSE,FALSE)
 def PIcomm():
-    '''
-    a=subprocess.call("PING 10.140.16.2")
-    print(a)
-    if a:
-        showwarning("ERROR!!","Your Apache server is down!")
-    else:
-        showwarning(" ","Your Apache serves is online!")
-    '''
     ip="10.131.16.2"
     proc = subprocess.Popen("ping %s" % ip, shell=True,stdout=subprocess.PIPE)
     c=0
