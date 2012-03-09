@@ -36,14 +36,14 @@ li=0
 ips=[]
 cips=[]
 IPip=0
-#subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
-fsize=os.path.getsize("/home/ubuntu/access.log")
+subprocess.call("F:\pscp -pw bigboss root@10.140.16.47:/var/log/squid/access.log C:\Logs ")
+fsize=os.path.getsize("C:/Logs/access.log")
 
 def function():
     global matrix 
     matrix=[]
-    #subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
-    filer="/home/ubuntu/access.log"
+    subprocess.call("F:\pscp -pw bigboss root@10.140.16.47:/var/log/squid/access.log C:\Logs ")
+    filer="C:/Logs/access.log"
     f=open(filer,"r")
 
     c=0
@@ -204,8 +204,8 @@ sortipsco()
 
 def finit():
     global fsize
-    #subprocess.call("scp root@192.168.1.106:/var/log/squid/access.log /home/ubuntu/")
-    b=os.path.getsize("/home/ubuntu/access.log")
+    subprocess.call("F:\pscp -pw bigboss root@10.140.16.47:/var/log/squid/access.log C:\Logs ")
+    b=os.path.getsize("C:/Logs/access.log")
     if b!=fsize:
         fsize=b
         function()
