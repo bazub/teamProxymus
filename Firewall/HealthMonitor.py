@@ -9,7 +9,7 @@ root.title("HM HealthMonitor©                                                  
 root.bind("<Escape>", lambda e: e.widget.quit())
 root.resizable(FALSE,FALSE)
 def PIcomm():
-    ip="10.131.16.2"
+    ip="10.140.16.47"
     proc = subprocess.Popen("ping %s" % ip, shell=True,stdout=subprocess.PIPE)
     c=0
     while True:
@@ -17,7 +17,7 @@ def PIcomm():
             if line.strip() == "":
                 pass
             else:
-                #print (line.strip())
+                print (line.strip())
                 if c==2:
                     what=line[0:-2]
                 c=c+1
